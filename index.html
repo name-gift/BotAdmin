@@ -5,218 +5,239 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BOT KEY VIP</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
 
 *{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
 }
 
 body{
-  background:#0b0f1a;
-  font-family:sans-serif;
-  color:white;
-  height:100vh;
+background:linear-gradient(180deg,#08111f,#0f1729,#0b1220);
+height:100vh;
+color:white;
+overflow:hidden;
 }
 
 /* LOGIN */
 
 .login{
-  width:350px;
-  background:#121826;
-  padding:25px;
-  border-radius:25px;
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  box-shadow:0 0 30px rgba(0,191,255,0.2);
+width:360px;
+background:#101827;
+padding:30px;
+border-radius:25px;
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+box-shadow:0 0 40px rgba(0,191,255,0.15);
+border:1px solid rgba(255,255,255,0.05);
 }
 
 .logo{
-  text-align:center;
-  font-size:30px;
-  margin-bottom:10px;
+text-align:center;
+font-size:42px;
+margin-bottom:10px;
 }
 
 .login h2{
-  text-align:center;
-  margin-bottom:25px;
+text-align:center;
+margin-bottom:25px;
+font-size:28px;
 }
 
 .login input{
-  width:100%;
-  padding:14px;
-  margin-top:12px;
-  border:none;
-  border-radius:14px;
-  background:#1c2436;
-  color:white;
-  outline:none;
-  font-size:15px;
+width:100%;
+padding:15px;
+margin-top:14px;
+border:none;
+border-radius:15px;
+background:#182235;
+color:white;
+outline:none;
+font-size:15px;
 }
 
 .login button{
-  width:100%;
-  padding:14px;
-  margin-top:18px;
-  border:none;
-  border-radius:14px;
-  background:linear-gradient(45deg,#00bfff,#0066ff);
-  color:white;
-  font-size:16px;
-  cursor:pointer;
-  transition:0.2s;
+width:100%;
+padding:15px;
+margin-top:18px;
+border:none;
+border-radius:15px;
+background:linear-gradient(45deg,#00bfff,#0066ff);
+color:white;
+font-size:16px;
+font-weight:700;
+cursor:pointer;
+transition:.2s;
 }
 
 .login button:hover{
-  transform:scale(1.03);
+transform:scale(1.03);
 }
 
 /* CHAT */
 
 .chat{
-  display:none;
-  height:100vh;
-  flex-direction:column;
+display:none;
+height:100vh;
+flex-direction:column;
 }
 
 /* TOP */
 
 .top{
-  background:#121826;
-  padding:18px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  box-shadow:0 2px 10px rgba(0,0,0,0.3);
+padding:15px;
+background:#101827;
+display:flex;
+align-items:center;
+justify-content:space-between;
+border-bottom:1px solid rgba(255,255,255,0.05);
 }
 
 .topLeft{
-  display:flex;
-  align-items:center;
-  gap:10px;
+display:flex;
+align-items:center;
+gap:12px;
 }
 
 .avatar{
-  width:45px;
-  height:45px;
-  border-radius:50%;
-  background:linear-gradient(45deg,#00bfff,#0066ff);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:bold;
+width:55px;
+height:55px;
+border-radius:50%;
+overflow:hidden;
+}
+
+.avatar img{
+width:100%;
+height:100%;
+object-fit:cover;
 }
 
 /* COMMANDS */
 
 .cmds{
-  display:flex;
-  gap:10px;
-  padding:10px;
-  background:#0f1524;
+display:flex;
+gap:10px;
+padding:12px;
+background:#0f1729;
+overflow:auto;
 }
 
 .cmdBtn{
-  background:#1c2436;
-  padding:10px 16px;
-  border-radius:12px;
-  cursor:pointer;
-  transition:0.2s;
+background:#182235;
+padding:12px 18px;
+border-radius:14px;
+cursor:pointer;
+transition:.2s;
+white-space:nowrap;
+font-weight:600;
 }
 
 .cmdBtn:hover{
-  background:#00bfff;
+background:#00bfff;
 }
 
 /* MESSAGES */
 
 .messages{
-  flex:1;
-  overflow:auto;
-  padding:15px;
+flex:1;
+overflow:auto;
+padding:15px;
 }
 
 .msg{
-  max-width:80%;
-  padding:14px;
-  margin:10px 0;
-  border-radius:18px;
-  line-height:1.5;
-  animation:show 0.2s ease;
+padding:15px;
+margin:10px 0;
+border-radius:18px;
+max-width:80%;
+line-height:1.6;
+word-wrap:break-word;
+animation:show .2s ease;
 }
 
 @keyframes show{
-  from{
-    transform:translateY(10px);
-    opacity:0;
-  }
-  to{
-    transform:translateY(0);
-    opacity:1;
-  }
+from{
+opacity:0;
+transform:translateY(10px);
 }
-
-.user{
-  margin-left:auto;
-  background:linear-gradient(45deg,#00bfff,#0066ff);
-  border-bottom-right-radius:5px;
+to{
+opacity:1;
+transform:translateY(0);
+}
 }
 
 .bot{
-  background:#1b2233;
-  border-bottom-left-radius:5px;
+background:#182235;
+border-bottom-left-radius:6px;
+}
+
+.user{
+margin-left:auto;
+background:linear-gradient(45deg,#00bfff,#0066ff);
+border-bottom-right-radius:6px;
 }
 
 /* INPUT */
 
 .inputBox{
-  display:flex;
-  gap:10px;
-  padding:15px;
-  background:#121826;
+display:flex;
+gap:10px;
+padding:15px;
+background:#101827;
 }
 
 .inputBox input{
-  flex:1;
-  padding:14px;
-  border:none;
-  border-radius:15px;
-  background:#1c2436;
-  color:white;
-  outline:none;
-  font-size:15px;
+flex:1;
+padding:15px;
+border:none;
+border-radius:15px;
+background:#182235;
+color:white;
+outline:none;
+font-size:15px;
 }
 
 .inputBox button{
-  width:110px;
-  border:none;
-  border-radius:15px;
-  background:linear-gradient(45deg,#00bfff,#0066ff);
-  color:white;
-  cursor:pointer;
-  font-size:15px;
+width:110px;
+border:none;
+border-radius:15px;
+background:linear-gradient(45deg,#00bfff,#0066ff);
+color:white;
+font-weight:700;
+cursor:pointer;
+}
+
+/* EXTRA */
+
+.admin{
+color:#7dffb3;
+}
+
+code{
+background:#0f1729;
+padding:5px 10px;
+border-radius:10px;
+display:inline-block;
+margin-top:5px;
+color:#7dffb3;
 }
 
 a{
-  color:#00ff99;
-  text-decoration:none;
-  font-weight:bold;
-}
-
-.admin{
-  color:#00ff99;
+text-decoration:none;
 }
 
 ::-webkit-scrollbar{
-  width:5px;
+width:5px;
 }
 
 ::-webkit-scrollbar-thumb{
-  background:#00bfff;
-  border-radius:10px;
+background:#00bfff;
+border-radius:10px;
 }
 
 </style>
@@ -254,12 +275,14 @@ a{
 <div class="topLeft">
 
 <div class="avatar">
-K
+<img
+id="botAvatar"
+src="https://i.imgur.com/Z7AzH2c.jpg">
 </div>
 
 <div>
 <b>BOT KEY VIP</b><br>
-<small>Online</small>
+<small id="statusText">🟢 Online</small>
 </div>
 
 </div>
@@ -291,324 +314,461 @@ Gửi
 <script>
 
 // ===== API =====
-const API = "https://script.google.com/macros/s/AKfycbxa6568yT8EIZ-Yl0axmK8VyBvieFC8GzEgspBPNwIvzCnVOw23paK6mUSpyofnS9Hr/exec";
+const API =
+"https://script.google.com/macros/s/AKfycbxa6568yT8EIZ-Yl0axmK8VyBvieFC8GzEgspBPNwIvzCnVOw23paK6mUSpyofnS9Hr/exec";
 
 // ROLE
 let role = "user";
 
+// MAINTENANCE
+let maintenance =
+localStorage.getItem("maintenance")
+== "true";
+
+if(maintenance){
+statusText.innerHTML =
+"🛠 Đang bảo trì";
+}
+
 // ENTER LOGIN
 [user, pass].forEach(input => {
 
-  input.addEventListener("keypress", function(e){
+input.addEventListener(
+"keypress",
+function(e){
 
-    if(e.key === "Enter"){
-      login();
-    }
+if(e.key === "Enter"){
+login();
+}
 
-  });
+});
 
 });
 
 // ENTER SEND CHAT
-msg.addEventListener("keypress", function(e){
+msg.addEventListener(
+"keypress",
+function(e){
 
-  if(e.key === "Enter"){
-    send();
-  }
+if(e.key === "Enter"){
+send();
+}
 
 });
 
 // ADD MESSAGE
 function addMsg(text,type){
 
-  let div = document.createElement("div");
+let div =
+document.createElement("div");
 
-  div.className = "msg " + type;
+div.className =
+"msg " + type;
 
-  div.innerHTML = text;
+div.innerHTML = text;
 
-  messages.appendChild(div);
+messages.appendChild(div);
 
-  messages.scrollTop = messages.scrollHeight;
+messages.scrollTop =
+messages.scrollHeight;
 }
 
-// RANDOM KEY 16
+// RANDOM KEY
 function randomKey(length = 16){
 
-  let chars =
-  "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+let chars =
+"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
-  let result = "";
+let result = "";
 
-  for(let i=0;i<length;i++){
+for(let i=0;i<length;i++){
 
-    result += chars.charAt(
-      Math.floor(Math.random() * chars.length)
-    );
-  }
+result += chars.charAt(
+Math.floor(
+Math.random() * chars.length
+)
+);
 
-  return result;
+}
+
+return result;
 }
 
 // LOGIN
 async function login(){
 
-  let username = user.value.trim();
+let username =
+user.value.trim();
 
-  let password = pass.value.trim();
+let password =
+pass.value.trim();
 
-  let res = await fetch(API,{
-    method:"POST",
-    body:JSON.stringify({
-      action:"login",
-      username,
-      password
-    })
-  });
+let res =
+await fetch(API,{
+method:"POST",
+body:JSON.stringify({
+action:"login",
+username,
+password
+})
+});
 
-  let data = await res.json();
+let data =
+await res.json();
 
-  if(data.status=="success"){
+if(data.status=="success"){
 
-    role = data.role;
+role = data.role;
 
-    loginBox.style.display="none";
+loginBox.style.display =
+"none";
 
-    chatBox.style.display="flex";
+chatBox.style.display =
+"flex";
 
-    addMsg(`
-    👋 Xin chào <b>${username}</b>
-    `,"bot");
+addMsg(`
+✨ Xin chào <b>${username}</b>
+`,"bot");
 
-    // ADMIN
-    if(role=="admin"){
+// ADMIN
+if(role=="admin"){
 
-      cmds.innerHTML=`
-      <div class="cmdBtn" onclick="autoAdd()">
-      /add
-      </div>
-      `;
+cmds.innerHTML=`
 
-      addMsg(`
-      👑 ADMIN MODE<br><br>
+<div class="cmdBtn"
+onclick="autoAdd()">
+/add
+</div>
 
-      Dùng:<br>
-      /add LINK SOGIO<br><br>
+<div class="cmdBtn"
+onclick="toggleMaintenance()">
+🛠 Bảo trì
+</div>
 
-      Ví dụ:<br>
-      /add https://google.com 24<br><br>
+`;
 
-      Hoặc tạo key vĩnh viễn:<br>
-      /add https://google.com
-      `,"bot");
+addMsg(`
 
-    }
+<div class="admin">
 
-    // USER
-    else{
+👑 ADMIN MODE<br><br>
 
-      cmds.innerHTML=`
-      <div class="cmdBtn" onclick="autoStart()">
-      /start
-      </div>
-      `;
+Tạo key:<br>
+<code>/add LINK 24</code><br><br>
 
-      addMsg(`
-      🔑 Nhập key để mở link<br><br>
+Ví dụ:<br>
+<code>/add https://google.com 24</code><br><br>
 
-      Dùng:<br>
-      /start KEY
-      `,"bot");
-    }
+Key vĩnh viễn:<br>
+<code>/add https://google.com</code>
 
-  }else{
+</div>
 
-    alert("Sai tài khoản");
-  }
+`,"bot");
+
+}
+
+// USER
+else{
+
+cmds.innerHTML=`
+
+<div class="cmdBtn"
+onclick="autoStart()">
+/start
+</div>
+
+`;
+
+addMsg(`
+🔑 Nhập key bằng lệnh:<br><br>
+
+<code>/start KEY</code>
+`,"bot");
+
+}
+
+}else{
+
+alert("Sai tài khoản");
+
+}
+
 }
 
 // AUTO
 function autoAdd(){
 
-  msg.value="/add ";
+msg.value="/add ";
 
-  msg.focus();
+msg.focus();
 }
 
 function autoStart(){
 
-  msg.value="/start ";
+msg.value="/start ";
 
-  msg.focus();
+msg.focus();
+}
+
+// MAINTENANCE
+function toggleMaintenance(){
+
+maintenance = !maintenance;
+
+localStorage.setItem(
+"maintenance",
+maintenance
+);
+
+statusText.innerHTML =
+maintenance
+? "🛠 Đang bảo trì"
+: "🟢 Online";
+
+addMsg(`
+🛠 Chế độ bảo trì:
+<b>
+${maintenance ? "BẬT" : "TẮT"}
+</b>
+`,"bot");
+
 }
 
 // SEND
 async function send(){
 
-  let text = msg.value.trim();
+let text =
+msg.value.trim();
 
-  if(text=="") return;
+if(text=="") return;
 
-  addMsg(text,"user");
+addMsg(text,"user");
 
-  // ===== ADD =====
-  if(text.startsWith("/add")){
+msg.value="";
 
-    if(role!="admin"){
+// ===== ADD =====
+if(text.startsWith("/add")){
 
-      addMsg(`
-      ❌ Bạn không phải admin
-      `,"bot");
+if(role!="admin"){
 
-      msg.value="";
+addMsg(`
+❌ Bạn không phải admin
+`,"bot");
 
-      return;
-    }
+return;
+}
 
-    let parts = text.split(" ");
+let parts =
+text.split(" ");
 
-    if(parts.length < 2){
+if(parts.length < 2){
 
-      addMsg(`
-      ❌ Sai cú pháp<br><br>
+addMsg(`
+❌ Sai cú pháp<br><br>
 
-      Ví dụ:<br>
-      /add https://google.com 24<br><br>
+<code>/add LINK 24</code>
+`,"bot");
 
-      Hoặc:<br>
-      /add https://google.com
-      `,"bot");
+return;
+}
 
-      msg.value="";
+let link = parts[1];
 
-      return;
-    }
+let hours =
+Number(parts[2]);
 
-    let link = parts[1];
+let key =
+randomKey();
 
-    let hours = Number(parts[2]);
+let expireDate;
 
-    let key = randomKey();
+// VĨNH VIỄN
+if(!parts[2]){
 
-    let expireDate;
+expireDate = "never";
 
-    // VĨNH VIỄN
-    if(!parts[2]){
+}
 
-      expireDate = "never";
-    }
+// CÓ GIỜ
+else{
 
-    // CÓ THỜI GIAN
-    else{
+expireDate =
+new Date();
 
-      expireDate = new Date();
+expireDate.setHours(
+expireDate.getHours() + hours
+);
 
-      expireDate.setHours(
-        expireDate.getHours() + hours
-      );
-    }
+}
 
-    await fetch(API,{
-      method:"POST",
-      body:JSON.stringify({
-        action:"addKey",
-        key,
-        link,
-        expire:expireDate
-      })
-    });
+await fetch(API,{
+method:"POST",
+body:JSON.stringify({
+action:"addKey",
+key,
+link,
+expire:expireDate
+})
+});
 
-    addMsg(`
-    <div class="admin">
+addMsg(`
 
-    ✅ TẠO KEY THÀNH CÔNG<br><br>
+<div class="admin">
 
-    🔑 KEY:<br>
-    <b>${key}</b><br><br>
+✅ TẠO KEY THÀNH CÔNG<br><br>
 
-    🌐 LINK:<br>
-    ${link}<br><br>
+🔑 KEY:<br>
+<code>${key}</code><br><br>
 
-    ⏰ HẾT HẠN:<br>
-    ${parts[2] ? hours + " giờ" : "Vĩnh viễn"}
+🌐 LINK:<br>
+${link}<br><br>
 
-    </div>
-    `,"bot");
-  }
+⏰ HẾT HẠN:<br>
+${parts[2]
+? hours + " giờ"
+: "Vĩnh viễn"}
 
-  // ===== START =====
-  else if(text.startsWith("/start")){
+</div>
 
-    let parts = text.split(" ");
+`,"bot");
 
-    if(parts.length < 2){
+}
 
-      addMsg(`
-      ❌ Nhập key<br><br>
+// ===== START =====
+else if(
+text.startsWith("/start")
+||
+(role=="admin" && !text.startsWith("/add"))
+){
 
-      Ví dụ:<br>
-      /start ABC123
-      `,"bot");
+if(maintenance){
 
-      msg.value="";
+addMsg(`
+🛠 BOT ĐANG BẢO TRÌ
+`,"bot");
 
-      return;
-    }
+return;
+}
 
-    let key = parts[1];
+let key;
 
-    let res = await fetch(API,{
-      method:"POST",
-      body:JSON.stringify({
-        action:"getKey",
-        key
-      })
-    });
+// ADMIN gửi thẳng key
+if(role=="admin" && !text.startsWith("/start")){
 
-    let data = await res.json();
+key = text;
 
-    // FOUND
-    if(data.status=="found"){
+}
 
-      addMsg(`
-      ✅ KEY HỢP LỆ<br><br>
+// USER dùng /start
+else{
 
-      🔑 ${key}<br><br>
+let parts =
+text.split(" ");
 
-      ⏰ Hạn:<br>
-      ${data.expire == "never" ? "Vĩnh viễn" : data.expire}<br><br>
+if(parts.length < 2){
 
-      <a href="${data.link}" target="_blank">
-      👉 MỞ LINK
-      </a>
-      `,"bot");
-    }
+addMsg(`
+❌ Vui lòng nhập key
+`,"bot");
 
-    // EXPIRED
-    else if(data.status=="expired"){
+return;
+}
 
-      addMsg(`
-      ❌ KEY ĐÃ HẾT HẠN
-      `,"bot");
-    }
+key = parts[1];
 
-    // NOT FOUND
-    else{
+}
 
-      addMsg(`
-      ❌ KEY KHÔNG TỒN TẠI
-      `,"bot");
-    }
-  }
+let res =
+await fetch(API,{
+method:"POST",
+body:JSON.stringify({
+action:"getKey",
+key
+})
+});
 
-  else{
+let data =
+await res.json();
 
-    addMsg(`
-    ❌ Lệnh không hợp lệ
-    `,"bot");
-  }
+if(data.status=="found"){
 
-  msg.value="";
+addMsg(`
+
+✅ KEY HỢP LỆ<br><br>
+
+🔑 <b>${key}</b><br><br>
+
+⏰ ${
+data.expire=="never"
+? "Vĩnh viễn"
+: data.expire
+}<br><br>
+
+<a href="${data.link}"
+target="_blank"
+style="
+display:inline-block;
+padding:12px 18px;
+background:linear-gradient(45deg,#00ff99,#00bfff);
+border-radius:12px;
+color:#08111f;
+font-weight:700;
+">
+
+👉 MỞ LINK
+
+</a>
+
+`,"bot");
+
+}
+
+else if(data.status=="expired"){
+
+addMsg(`
+
+<div style="color:#ff6b6b;">
+
+❌ KEY ĐÃ HẾT HẠN<br><br>
+
+🔑 <b>${key}</b><br><br>
+
+<div style="
+background:#3a1111;
+padding:12px;
+border-radius:12px;
+text-align:center;
+font-weight:bold;
+color:#ff4d4d;
+cursor:not-allowed;
+">
+
+🚫 LINK ĐÃ KHÓA
+
+</div>
+
+</div>
+
+`,"bot");
+
+}
+
+else{
+
+// CHECK ĐỘ DÀI KEY
+if(text.length < 16){
+
+addMsg(`
+❌ Vui lòng nhập key hợp lệ
+`,"bot");
+
+}
+
+}
+
+}
+
 }
 
 </script>
