@@ -7,240 +7,8 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
-}
-
-body{
-background:linear-gradient(180deg,#08111f,#0f1729,#0b1220);
-height:100vh;
-color:white;
-overflow:hidden;
-}
-
-/* LOGIN */
-
-.login{
-width:360px;
-background:#101827;
-padding:30px;
-border-radius:25px;
-position:absolute;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-box-shadow:0 0 40px rgba(0,191,255,0.15);
-border:1px solid rgba(255,255,255,0.05);
-}
-
-.logo{
-text-align:center;
-font-size:42px;
-margin-bottom:10px;
-}
-
-.login h2{
-text-align:center;
-margin-bottom:25px;
-font-size:28px;
-}
-
-.login input{
-width:100%;
-padding:15px;
-margin-top:14px;
-border:none;
-border-radius:15px;
-background:#182235;
-color:white;
-outline:none;
-font-size:15px;
-}
-
-.login button{
-width:100%;
-padding:15px;
-margin-top:18px;
-border:none;
-border-radius:15px;
-background:linear-gradient(45deg,#00bfff,#0066ff);
-color:white;
-font-size:16px;
-font-weight:700;
-cursor:pointer;
-transition:.2s;
-}
-
-.login button:hover{
-transform:scale(1.03);
-}
-
-/* CHAT */
-
-.chat{
-display:none;
-height:100vh;
-flex-direction:column;
-}
-
-/* TOP */
-
-.top{
-padding:15px;
-background:#101827;
-display:flex;
-align-items:center;
-justify-content:space-between;
-border-bottom:1px solid rgba(255,255,255,0.05);
-}
-
-.topLeft{
-display:flex;
-align-items:center;
-gap:12px;
-}
-
-.avatar{
-width:55px;
-height:55px;
-border-radius:50%;
-overflow:hidden;
-}
-
-.avatar img{
-width:100%;
-height:100%;
-object-fit:cover;
-}
-
-/* COMMANDS */
-
-.cmds{
-display:flex;
-gap:10px;
-padding:12px;
-background:#0f1729;
-overflow:auto;
-}
-
-.cmdBtn{
-background:#182235;
-padding:12px 18px;
-border-radius:14px;
-cursor:pointer;
-transition:.2s;
-white-space:nowrap;
-font-weight:600;
-}
-
-.cmdBtn:hover{
-background:#00bfff;
-}
-
-/* MESSAGES */
-
-.messages{
-flex:1;
-overflow:auto;
-padding:15px;
-}
-
-.msg{
-padding:15px;
-margin:10px 0;
-border-radius:18px;
-max-width:80%;
-line-height:1.6;
-word-wrap:break-word;
-animation:show .2s ease;
-}
-
-@keyframes show{
-from{
-opacity:0;
-transform:translateY(10px);
-}
-to{
-opacity:1;
-transform:translateY(0);
-}
-}
-
-.bot{
-background:#182235;
-border-bottom-left-radius:6px;
-}
-
-.user{
-margin-left:auto;
-background:linear-gradient(45deg,#00bfff,#0066ff);
-border-bottom-right-radius:6px;
-}
-
-/* INPUT */
-
-.inputBox{
-display:flex;
-gap:10px;
-padding:15px;
-background:#101827;
-}
-
-.inputBox input{
-flex:1;
-padding:15px;
-border:none;
-border-radius:15px;
-background:#182235;
-color:white;
-outline:none;
-font-size:15px;
-}
-
-.inputBox button{
-width:110px;
-border:none;
-border-radius:15px;
-background:linear-gradient(45deg,#00bfff,#0066ff);
-color:white;
-font-weight:700;
-cursor:pointer;
-}
-
-/* EXTRA */
-
-.admin{
-color:#7dffb3;
-}
-
-code{
-background:#0f1729;
-padding:5px 10px;
-border-radius:10px;
-display:inline-block;
-margin-top:5px;
-color:#7dffb3;
-}
-
-a{
-text-decoration:none;
-}
-
-::-webkit-scrollbar{
-width:5px;
-}
-
-::-webkit-scrollbar-thumb{
-background:#00bfff;
-border-radius:10px;
-}
-
-</style>
+<!-- CSS -->
+  <link rel="stylesheet" href="botstyle.css">
 </head>
 <body>
 
@@ -315,7 +83,7 @@ Gửi
 
 // ===== API =====
 const API =
-"https://script.google.com/macros/s/AKfycbxa6568yT8EIZ-Yl0axmK8VyBvieFC8GzEgspBPNwIvzCnVOw23paK6mUSpyofnS9Hr/exec";
+"https://script.google.com/macros/s/AKfycbxsIJ5VEoZnuLxme1haWqnbDOlFMVANdBl3gsrX9p0oCFhK6GGh2dHPu7tAFP1kJd6N/exec";
 
 // ROLE
 let role = "user";
@@ -392,6 +160,18 @@ Math.random() * chars.length
 }
 
 return result;
+}
+
+function copyKey(key){
+
+navigator.clipboard.writeText(key);
+
+addMsg(`
+✅ Đã copy key:<br><br>
+
+<code>${key}</code>
+`,"bot");
+
 }
 
 // LOGIN
@@ -619,7 +399,34 @@ addMsg(`
 ✅ TẠO KEY THÀNH CÔNG<br><br>
 
 🔑 KEY:<br>
-<code>${key}</code><br><br>
+
+<div style="
+display:flex;
+align-items:center;
+gap:10px;
+margin-top:8px;
+margin-bottom:15px;
+">
+
+<code id="key_${key}">
+${key}
+</code>
+
+<button
+onclick="copyKey('${key}')"
+style="
+padding:8px 14px;
+border:none;
+border-radius:10px;
+background:linear-gradient(45deg,#00ff99,#00bfff);
+color:#08111f;
+font-weight:700;
+cursor:pointer;
+">
+📋 Copy
+</button>
+
+</div>
 
 🌐 LINK:<br>
 ${link}<br><br>
@@ -702,7 +509,8 @@ addMsg(`
 ⏰ ${
 data.expire=="never"
 ? "Vĩnh viễn"
-: data.expire
+: new Date(data.expire)
+.toLocaleString("vi-VN")
 }<br><br>
 
 <a href="${data.link}"
@@ -757,7 +565,7 @@ cursor:not-allowed;
 else{
 
 // CHECK ĐỘ DÀI KEY
-if(text.length < 16){
+if(text.length < 10){
 
 addMsg(`
 ❌ Vui lòng nhập key hợp lệ
