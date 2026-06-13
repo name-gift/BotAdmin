@@ -26,6 +26,13 @@
 
 <input id="pass" type="password" placeholder="Password">
 
+<div class="rememberBox">
+    <input type="checkbox" id="remember">
+    <label for="remember">
+        Ghi nhớ đăng nhập
+    </label>
+</div>
+
 <button onclick="login()">
 Đăng nhập
 </button>
@@ -55,6 +62,12 @@ src="https://i.imgur.com/Z7AzH2c.jpg">
 
 </div>
 
+<button
+class="logoutBtn"
+onclick="logout()">
+Đăng xuất
+</button>
+
 </div>
 
 <!-- COMMANDS -->
@@ -83,15 +96,180 @@ Gửi
 
 // ===== API =====
 const API =
-"https://script.google.com/macros/s/AKfycbxsIJ5VEoZnuLxme1haWqnbDOlFMVANdBl3gsrX9p0oCFhK6GGh2dHPu7tAFP1kJd6N/exec";
+"https://bot-api2.abcd1601ab.workers.dev/";
+
+const loginBox = document.getElementById("loginBox");
+const chatBox = document.getElementById("chatBox");
+const messages = document.getElementById("messages");
+const cmds = document.getElementById("cmds");
+const msg = document.getElementById("msg");
+const user = document.getElementById("user");
+const pass = document.getElementById("pass");
+const remember = document.getElementById("remember");
+const statusText = document.getElementById("statusText");
 
 // ROLE
 let role = "user";
 
+async function loadMaintenance(){
+
+  let res = await fetch(API,{
+    method:"POST",
+    body:JSON.stringify({
+      action:"getMaintenance"
+    })
+  });
+
+  let data = await res.json();
+
+  let now = Date.now();
+
+  // Tự bật nếu đến giờ hẹn
+  if(
+    !data.maintenance &&
+    Number(data.scheduledStart) > 0 &&
+    now >= Number(data.scheduledStart)
+  ){
+
+    await fetch(API,{
+      method:"POST",
+      body:JSON.stringify({
+        action:"setMaintenance",
+        maintenance:true,
+        maintenanceUntil:
+          Number(data.scheduledStart) +
+          Number(data.scheduledDuration) * 3600000
+      })
+    });
+
+    return loadMaintenance();
+  }
+
+  // Tự tắt khi hết giờ
+  if(
+    data.maintenance &&
+    Number(data.maintenanceUntil) > 0 &&
+    now >= Number(data.maintenanceUntil)
+  ){
+
+    await fetch(API,{
+      method:"POST",
+      body:JSON.stringify({
+        action:"setMaintenance",
+        maintenance:false,
+        maintenanceUntil:0
+      })
+    });
+
+    return loadMaintenance();
+  }
+
+  maintenance = data.maintenance;
+
+  statusText.innerHTML =
+  maintenance
+  ? "🛠 Đang bảo trì"
+  : "🟢 Online";
+}
+
+// TỰ ĐỘNG ĐIỀN TÀI KHOẢN ĐÃ LƯU
+window.addEventListener("load",()=>{
+
+const savedUser =
+localStorage.getItem("savedUser");
+
+const savedPass =
+localStorage.getItem("savedPass");
+
+if(savedUser){
+user.value = savedUser;
+}
+
+if(savedPass){
+pass.value = savedPass;
+remember.checked = true;
+}
+
+});
+
+window.addEventListener(
+"load",
+async ()=>{
+
+const token =
+localStorage.getItem(
+"sessionToken"
+);
+
+if(!token) return;
+
+let res =
+await fetch(API,{
+method:"POST",
+body:JSON.stringify({
+action:"checkToken",
+token
+})
+});
+
+let data =
+await res.json();
+
+if(data.status=="success"){
+
+role = data.role;
+
+loginBox.style.display =
+"none";
+
+chatBox.style.display =
+"flex";
+
+addMsg(
+`✨ Xin chào <b>${data.username}</b>`,
+"bot"
+);
+
+if(role=="admin"){
+
+cmds.innerHTML=`
+
+<div class="cmdBtn"
+onclick="autoAdd()">
+/add
+</div>
+
+<div class="cmdBtn"
+onclick="autoMaint()">
+🛠 Bảo trì
+</div>
+
+<div class="cmdBtn"
+onclick="autoScheduleMaint()">
+⏰ Hẹn giờ
+</div>
+
+`;
+
+}else{
+
+cmds.innerHTML=`
+
+<div class="cmdBtn"
+onclick="autoStart()">
+/start
+</div>
+
+`;
+
+}
+
+}
+
+});
+
 // MAINTENANCE
-let maintenance =
-localStorage.getItem("maintenance")
-== "true";
+let maintenance = false;
 
 if(maintenance){
 statusText.innerHTML =
@@ -198,6 +376,35 @@ await res.json();
 
 if(data.status=="success"){
 
+localStorage.setItem(
+"sessionToken",
+data.token
+);
+
+if(remember.checked){
+
+localStorage.setItem(
+"savedUser",
+username
+);
+
+localStorage.setItem(
+"savedPass",
+password
+);
+
+}else{
+
+localStorage.removeItem(
+"savedUser"
+);
+
+localStorage.removeItem(
+"savedPass"
+);
+
+}
+
 role = data.role;
 
 loginBox.style.display =
@@ -217,12 +424,17 @@ cmds.innerHTML=`
 
 <div class="cmdBtn"
 onclick="autoAdd()">
-/add
+➕ Tạo Key
 </div>
 
 <div class="cmdBtn"
-onclick="toggleMaintenance()">
+onclick="autoMaint()">
 🛠 Bảo trì
+</div>
+
+<div class="cmdBtn"
+onclick="autoScheduleMaint()">
+⏰ Hẹn giờ
 </div>
 
 `;
@@ -284,6 +496,22 @@ msg.value="/add ";
 msg.focus();
 }
 
+function autoMaint(){
+
+  msg.value="/maint ";
+
+  msg.focus();
+
+}
+
+function autoScheduleMaint(){
+
+msg.value="/schedulemaint ";
+
+msg.focus();
+
+}
+
 function autoStart(){
 
 msg.value="/start ";
@@ -291,26 +519,24 @@ msg.value="/start ";
 msg.focus();
 }
 
-// MAINTENANCE
-function toggleMaintenance(){
+async function toggleMaintenance(){
 
 maintenance = !maintenance;
 
-localStorage.setItem(
-"maintenance",
-maintenance
-);
+await fetch(API,{
+method:"POST",
+body:JSON.stringify({
+action:"setMaintenance",
+maintenance,
+maintenanceUntil:0
+})
+});
 
-statusText.innerHTML =
-maintenance
-? "🛠 Đang bảo trì"
-: "🟢 Online";
+await loadMaintenance();
 
 addMsg(`
 🛠 Chế độ bảo trì:
-<b>
-${maintenance ? "BẬT" : "TẮT"}
-</b>
+<b>${maintenance ? "BẬT" : "TẮT"}</b>
 `,"bot");
 
 }
@@ -440,6 +666,132 @@ ${parts[2]
 
 `,"bot");
 
+}
+
+if(text.startsWith("/maint")){
+
+  if(role!="admin"){
+
+    addMsg("❌ Bạn không phải admin","bot");
+
+    return;
+  }
+
+  let parts = text.split(" ");
+
+  // Tắt bảo trì
+  if(parts[1] == "off"){
+
+    await fetch(API,{
+      method:"POST",
+      body:JSON.stringify({
+        action:"setMaintenance",
+        maintenance:false,
+        maintenanceUntil:0
+      })
+    });
+
+    addMsg(`
+✅ Đã tắt bảo trì
+    `,"bot");
+
+    loadMaintenance();
+
+    return;
+  }
+
+  let hours = Number(parts[1]);
+
+  if(isNaN(hours)){
+
+    addMsg(`
+❌ Cú pháp
+
+<code>/maint 2</code>
+
+Bảo trì 2 giờ
+
+<code>/maint off</code>
+
+Tắt bảo trì
+    `,"bot");
+
+    return;
+  }
+
+  await fetch(API,{
+    method:"POST",
+    body:JSON.stringify({
+      action:"setMaintenance",
+      maintenance:true,
+      maintenanceUntil:
+      Date.now() + hours*3600000
+    })
+  });
+
+  addMsg(`
+🛠 Đã bật bảo trì
+
+⏰ ${hours} giờ
+  `,"bot");
+
+  loadMaintenance();
+
+  return;
+}
+
+if(text.startsWith("/schedulemaint")){
+
+  if(role!="admin"){
+    return;
+  }
+
+  let parts = text.split(" ");
+
+  if(parts.length < 3){
+
+    addMsg(`
+❌ Cú pháp
+
+<code>/schedulemaint 23:00 2</code>
+    `,"bot");
+
+    return;
+  }
+
+  let time = parts[1];
+  let hours = Number(parts[2]);
+
+  let [h,m] = time.split(":");
+
+  let start = new Date();
+
+  start.setHours(Number(h));
+  start.setMinutes(Number(m));
+  start.setSeconds(0);
+
+  if(start.getTime() < Date.now()){
+    start.setDate(start.getDate()+1);
+  }
+
+  await fetch(API,{
+    method:"POST",
+    body:JSON.stringify({
+      action:"scheduleMaintenance",
+      start:start.getTime(),
+      duration:hours
+    })
+  });
+
+  addMsg(`
+✅ Đã hẹn bảo trì
+
+🕒 ${time}
+
+⏰ ${hours} giờ
+  `,"bot");
+
+  return;
 }
 
 // ===== START =====
@@ -578,6 +930,35 @@ addMsg(`
 }
 
 }
+
+async function logout(){
+
+const token =
+localStorage.getItem(
+"sessionToken"
+);
+
+await fetch(API,{
+method:"POST",
+body:JSON.stringify({
+action:"logout",
+token
+})
+});
+
+localStorage.removeItem(
+"sessionToken"
+);
+
+location.reload();
+
+}
+
+loadMaintenance();
+
+setInterval(()=>{
+  loadMaintenance();
+},60000);
 
 </script>
 
