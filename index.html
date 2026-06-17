@@ -556,69 +556,68 @@ msg.value="";
 // ===== ADD =====
 if(text.startsWith("/add")){
 
-if(role!="admin"){
+  if(role!="admin"){
 
-addMsg(`
+    addMsg(`
 ❌ Bạn không phải admin
-`,"bot");
+    `,"bot");
 
-return;
-}
+    return;
+  }
 
-let parts =
-text.split(" ");
+  let parts = text.split(" ");
 
-if(parts.length < 2){
+  if(parts.length < 2){
 
-addMsg(`
+    addMsg(`
 ❌ Sai cú pháp<br><br>
 
 <code>/add LINK 24</code>
-`,"bot");
+    `,"bot");
 
-return;
-}
+    return;
+  }
 
-let link = parts[1];
+  let link = parts[1];
 
-let hours =
-Number(parts[2]);
+  let hours = Number(parts[2]);
 
-let key =
-randomKey();
+  let key = randomKey();
 
-let expireDate;
+  let expireDate;
 
-// VĨNH VIỄN
-if(!parts[2]){
+  // VĨNH VIỄN
+  if(!parts[2]){
 
-expireDate = "never";
+    expireDate = "never";
 
-}
+  }
 
-// CÓ GIỜ
-else{
+  // CÓ GIỜ
+  else{
 
-expireDate =
-new Date();
+    expireDate = new Date();
 
-expireDate.setHours(
-expireDate.getHours() + hours
-);
+    expireDate.setHours(
+      expireDate.getHours() + hours
+    );
 
-}
+  }
 
-await fetch(API,{
-method:"POST",
-body:JSON.stringify({
-action:"addKey",
-key,
-link,
-expire:expireDate
-})
-});
+  await fetch(
+    "https://bot-api2.abcd1601ab.workers.dev/",
+    {
+      method:"POST",
+      body:JSON.stringify({
+        action:"addKey",
+        key,
+        link,
+        expire:expireDate
+      })
+    }
+  );
 
-addMsg(`
+  addMsg(`
 
 <div class="admin">
 
@@ -664,7 +663,7 @@ ${parts[2]
 
 </div>
 
-`,"bot");
+  `,"bot");
 
 }
 
